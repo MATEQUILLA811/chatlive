@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express();
 const conexion = require("./db/index");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const Server = require("http").createServer(app);
 const io = require("socket.io")(Server,{
@@ -21,7 +23,7 @@ io.on('connection', socket=>{
                 console.log(err)
             } else {
                 console.log('Inserción exitosa:');
-                socket.emit("server:insertado")
+                socket.emit("server:insertado");
             }
         })
     })
