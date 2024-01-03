@@ -1,13 +1,17 @@
 const express = require("express")
-const conexion = require("./db/index")
+const app = express();
+const conexion = require("./db/index");
 
-const app = express()
-const Server = require("http").createServer();
+const Server = require("http").createServer(app);
 const io = require("socket.io")(Server,{
     cors:{
         origin:"*",
     }
 })
+
+app.set("port",process.env.PORT || 3000)
+
+
 io.on('connection', socket=>{
     console.log("conecction")
     socket.on("client:datas_user",(ev)=>{
@@ -23,9 +27,13 @@ io.on('connection', socket=>{
     })
 })
 
-app.get("/",(req,res)=>{
-    res.send("FUNCIONANDO :)")
+
+app.use("/",require("./routers/index"))
+
+/**
+ * *run server*/
+Server.listen(app.get("port"),()=>{
+    console.log("on port : ",app.get("port"))
 })
 
-Server.listen(3000)
 console.log("PORT RUNNING",3000)
