@@ -18,7 +18,7 @@ io.on('connection', socket=>{
     console.log("conecction")
     socket.on("client:datas_user",(ev)=>{
         console.log(ev)
-        conexion.query(`INSERT INTO User(id, name, description) VALUES ('[value-1]','[value-2]','[value-3]')`,(err,resp)=>{
+        conexion.query(`INSERT INTO User(id, name, description) VALUES ('${ev.id}','${ev.name}','${ev.description}')`,(err,resp)=>{
             
             if (err) {
                 console.log(err)
