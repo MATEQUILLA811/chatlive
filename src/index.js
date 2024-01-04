@@ -22,7 +22,7 @@ io.on('connection', socket=>{
             if (err) {
                 console.log(err)
             } else {
-                console.log('Inserción exitosa:');
+                console.log('Inserción exitosa:',resp);
                 socket.emit("server:insertado");
             }
         })
