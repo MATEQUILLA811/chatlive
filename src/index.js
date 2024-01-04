@@ -17,7 +17,7 @@ app.set("port",process.env.PORT || 3000)
 io.on('connection', socket=>{
     console.log("conecction")
     socket.on("client:datas_user",(ev)=>{
-        //console.log(ev.id)
+        console.log(ev.id)
         conexion.query(`INSERT INTO User(id, name, description) VALUES ('${ev.id}','${ev.name}','${ev.description}')`,(err,resp)=>{
             if (err) {
                 console.log(err)
