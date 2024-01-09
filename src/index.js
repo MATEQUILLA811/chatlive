@@ -36,6 +36,13 @@ io.on('connection', socket=>{
     })
     socket.on("user_register_grup",(ev)=>{
         console.log(ev)
+        conexion.query(`INSERT INTO Publicaciones(id, name, description, id_user, publico, urlimage) VALUES ('${ev.id_publicacion}','${ev.name}','${ev.description}','${ev.id_user}','${ev.publico}','${ev.urlImage}')`,(err,resp)=>{
+            if(err){
+                console.error(err)
+            }else{
+                console.log("se inserto correctamente")
+            }
+        })
     })
 })
 
