@@ -34,6 +34,9 @@ io.on('connection', socket=>{
             }
         })
     })
+    socket.on("user_register_grup",(ev)=>{
+        console.log(ev)
+    })
 })
 
 
