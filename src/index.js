@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const cors = require('cors');
 dotenv.config();
 
-app.use(cors()); // Habilitar CORS para todas las rutas
+app.use(cors({ origin: '*' }));
 
 app.use(express.json());
 
