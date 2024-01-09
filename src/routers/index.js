@@ -26,6 +26,7 @@ const upload = multer({ storage });
 
 
 Router.post('/upload', upload.single('image'), (req, res) => {
+  console.log(req.file)
   if (!req.file) {
     return res.status(400).json({ error: 'No se proporcionó un archivo' });
   }
