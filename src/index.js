@@ -2,7 +2,13 @@ const express = require("express")
 const app = express();
 const conexion = require("./db/index");
 const dotenv = require("dotenv");
+
+const cors = require('cors');
 dotenv.config();
+
+app.use(cors()); // Habilitar CORS para todas las rutas
+
+app.use(express.json());
 
 const Server = require("http").createServer(app);
 const io = require("socket.io")(Server,{
