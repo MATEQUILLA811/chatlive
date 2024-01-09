@@ -24,8 +24,7 @@ io.on('connection', socket=>{
     console.log("conecction")
     socket.on("client:datas_user",(ev)=>{
         //console.log(ev)
-        conexion.query(`INSERT INTO User(id, name, description) VALUES ('${ev.id}','${ev.name}','${ev.description}')`,(err,resp)=>{
-            
+        conexion.query(`INSERT INTO User(id, name, description) VALUES ('${ev.id}','${ev.name}','${ev.description}')`,(err,resp)=>{   
             if (err) {
                 console.log(err)
             } else {
@@ -46,6 +45,15 @@ io.on('connection', socket=>{
             }
         })
     })
+    conexion.query("SELECT * FROM `Publicaciones`",(err,resp)=>{
+        if(err){
+
+        }else{
+            console.log(resp)
+            socket.emit("server:publicaciones_all",resp)  
+        }
+    })
+
 })
 
 
