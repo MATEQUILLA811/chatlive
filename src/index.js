@@ -1,8 +1,7 @@
 const express = require("express")
 const app = express();
-const conexion = require("./db/index");
 const dotenv = require("dotenv");
-
+const DB = require("./firebase/firebase")
 const cors = require('cors');
 dotenv.config();
 
@@ -19,45 +18,32 @@ const io = require("socket.io")(Server,{
 
 app.set("port",process.env.PORT || 3000)
 
-
 io.on('connection', socket=>{
-    console.log("conecction")
-    socket.on("client:datas_user",(ev)=>{
-        //console.log(ev)
-        conexion.query(`INSERT INTO User(id, name, description) VALUES ('${ev.id}','${ev.name}','${ev.description}')`,(err,resp)=>{   
-            if (err) {
-                console.log(err)
-            } else {
-                console.log('Inserción exitosa:');
-                socket.emit("server:insertado");
-            }
-        })
-    })
-    socket.on("user_register_grup",(ev)=>{
-        console.log(ev)
-        conexion.query(`INSERT INTO Publicaciones(id, name, description, id_user, publico, urlimage) VALUES ('${ev.id_publicacion}','${ev.name}','${ev.description}','${ev.id_user}','${ev.publico}','${ev.urlImage}')`,(err,resp)=>{
-            if(err){
-                console.error(err)
-            }else{
-                console.log("se inserto correctamente")
-                socket.emit("server:insertado_publicacion");
+    //console.log("conecction",socket.id)
 
-            }
-        })
+    socket.on('user:datas_message',async(ev)=>{  
+        console.log("RECIBIDO: "+ev)
+        DATOSALL = await DB.OBTENERDATOS('chat_personas',ev);
+        //console.log(DATOSALL)
+        io.emit('server:datos_sala',DATOSALL)
     })
-    conexion.query("SELECT * FROM `Publicaciones`",(err,resp)=>{
-        if(err){
-
-        }else{
-            console.log(resp)
-            socket.emit("server:publicaciones_all",resp)  
-        }
+    socket.on("user:sendMessage",(ev)=>{
+        console.log(ev.id)
+        io.emit('server:sendMessage',ev)
     })
-
+    
 })
 
 
-app.use("/",require("./routers/index"))
+app.get("/",(req,res)=>{
+    const data = {
+        nombre:"jasminfxcg",
+        apellido:"llacuacvghb"
+    }
+    //AGREGAR('chat_personas',data)
+  
+  res.send("complete")
+})
 
 /**
  * *run server*/
