@@ -25,7 +25,7 @@ io.on('connection', socket=>{
         console.log("RECIBIDO: "+ev)
         DATOSALL = await DB.OBTENERDATOS('chat_personas',ev);
         //console.log(DATOSALL)
-        io.emit('server:datos_sala',DATOSALL)
+        socket.emit('server:datos_sala',DATOSALL)
     })
     socket.on("user:sendMessage",(ev)=>{
         console.log(ev.id)
