@@ -27,9 +27,23 @@ io.on('connection', socket=>{
         //console.log(DATOSALL)
         socket.emit('server:datos_sala',DATOSALL)
     })
+
     socket.on("user:sendMessage",(ev)=>{
         console.log(ev.id)
         io.emit('server:sendMessage',ev)
+    })
+
+
+    socket.on('user:grupos_message',async(ev)=>{  
+        console.log(ev)
+        //console.log(ev)
+        DATOSALL = await DB.OBTENERDATOS('chat_grupos',ev);
+        console.log(DATOSALL)
+        socket.emit('server:grupo_message',DATOSALL)
+    })
+    socket.on("user:grupoMessageSend",(ev)=>{
+        console.log(ev.id)
+        io.emit('server:grupoMessageSend',ev)
     })
     
 })

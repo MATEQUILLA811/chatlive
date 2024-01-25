@@ -46,6 +46,7 @@ async function OBTENERDATOS(coleccion, idSala) {
     throw error;
   }
 }
+
 module.exports={
   AGREGAR,
   OBTENERDATOS
