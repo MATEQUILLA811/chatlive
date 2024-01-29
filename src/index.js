@@ -22,7 +22,7 @@ io.on('connection', socket=>{
     //console.log("conecction",socket.id)
 
     socket.on('user:datas_message',async(ev)=>{  
-        console.log("RECIBIDO: "+ev)
+        //console.log("RECIBIDO: "+ev)
         DATOSALL = await DB.OBTENERDATOS('chat_personas',ev);
         //console.log(DATOSALL)
         socket.emit('server:datos_sala',DATOSALL)
@@ -30,7 +30,8 @@ io.on('connection', socket=>{
 
     socket.on("user:sendMessage",(ev)=>{
         console.log(ev.id)
-        io.emit('server:sendMessage',ev)
+        const datas = {...ev, senderId: socket.id}
+        io.emit('server:sendMessage',datas)
     })
 
 
@@ -42,8 +43,11 @@ io.on('connection', socket=>{
         socket.emit('server:grupo_message',DATOSALL)
     })
     socket.on("user:grupoMessageSend",(ev)=>{
-        console.log(ev.id)
+        //console.log(ev.id)
         io.emit('server:grupoMessageSend',ev)
+    })
+    socket.on('user:recived',(ev)=>{
+        io.emit('server:recived',ev)
     })
     
 })
