@@ -5,7 +5,7 @@ git status
 git add .
 
 # Confirma los cambios
-git commit -m "MIAU"
+git commit -m "NUEVOMOD"
 
 # Empuje los cambios a GitHub
 git push origin master
